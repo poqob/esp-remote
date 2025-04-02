@@ -1,6 +1,8 @@
 venv/
 build/
 dist/
+project/
+_.remove
 *.egg-info/
 __pycache__/
 *.pyc

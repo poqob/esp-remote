@@ -103,6 +103,22 @@ The application uses a directory named `project` for file transfer operations. T
      ```
    - Description: This command uploads changes made in the `project` directory to the ESP device.
 
+### File Removal Mechanism with `_.remove`
+
+In addition to pushing and fetching files, the application supports a file removal mechanism using a special file named `_.remove`:
+
+- **Purpose**: The `_.remove` file allows you to specify files on the ESP device that should be deleted during the next operation.
+- **Usage**: Create or edit the `_.remove` file in the root directory of the application, adding one file path per line that you want to delete from the ESP device.
+- **Operation**: When you run a push operation or explicitly trigger the remove function, the application reads the `_.remove` file and sends deletion commands to the ESP device for each listed file.
+
+#### Example:
+1. Create a file named `_.remove` with the following content:
+2. Add a file path to remove line per line.
+   ```bash
+   home/connection/new.conf
+   example.py
+   ```
+
 ### Graphical User Interface
 
 The application also provides a graphical interface for easier interaction. Below are examples of the FTP operations in the GUI:
@@ -115,9 +131,17 @@ The application also provides a graphical interface for easier interaction. Belo
 ![Push Operation](res/push.png)  
 *Figure 2: Pushing files to an ESP device using the GUI*
 
+#### Remove Operation
+![Remove Operation](res/remove.png)  
+*Figure 3: Removing files from an ESP device using the _.remove file*
+
+The remove operation is triggered automatically after a push operation. As shown in Figure 3, when the application finds a _.remove file with valid file paths, it will send commands to delete those files from the ESP device. The status of the removal operation is displayed in the result area.
+
 #### Important Notes:
 - Files in the `project` directory are used by the application for synchronization. Therefore, be cautious when editing files in this directory.
 - If any errors occur during file transfer, the application will provide a detailed error message.
+- The _.remove file should be placed in the root directory of the application, not in the project folder.
+- After successful removal, you may want to update or clear the _.remove file to prevent accidentally deleting the same files again.
 
 ---
 

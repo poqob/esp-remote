@@ -19,6 +19,23 @@ def push(ip, port, username, password):
         print("Push operation completed successfully.")
     except Exception as e:
         print(f"Error: {e}")
+    check_remove_file(ip, port, username, password)
+    def check_remove_file(ip, port, username, password):
+        try:
+            with open("_.remove", "r+") as file:
+                lines = file.readlines()
+                if lines:
+                    for line in lines:
+                        command = f'lftp -u {username},{password} -p {port} {ip} -e "rm {line.strip()}; bye"'
+                        subprocess.run(command, shell=True, check=True)
+                    print("Remove operation completed successfully.")
+                    # Truncate the file after successful removal
+                    file.seek(0)
+                    file.truncate()
+                else:
+                    print("No files to remove.")
+        except Exception as e:
+            print(f"Error: {e}")
 
 def main():
     parser = argparse.ArgumentParser(description="ESP FTP CLI Tool")

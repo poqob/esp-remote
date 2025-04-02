@@ -25,6 +25,23 @@ def run_push_script():
         result_label.config(text="Push operation completed successfully.", fg="green")
     except Exception as e:
         result_label.config(text=f"Error: {e}", fg="red")
+    check_remove_file()
+
+def check_remove_file():
+    try:
+        with open("_.remove", "r") as file:
+            lines = file.readlines()
+            if lines:
+                for line in lines:
+                    command = f'lftp -u {username_entry.get()},{password_entry.get()} -p {port_entry.get()} {ip_entry.get()} -e "rm {line.strip()}; bye"'
+                    subprocess.run(command, shell=True, check=True)
+                # Truncate the file after successful removal
+                with open("_.remove", "w") as file:
+                    file.truncate(0)
+                result_label.config(text="Remove operation completed successfully.", fg="green")
+    except Exception as e:
+        result_label.config(text=f"Error: {e}", fg="red")
+
 
 # Main window
 root = tk.Tk()
