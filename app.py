@@ -44,7 +44,7 @@ root.geometry("400x340")
 root.resizable(False, False)
 
 # Title
-title_label = tk.Label(root, text="Basic FTP Client", font=("Arial", 16, "bold"))
+title_label = tk.Label(root, text="Client", font=("Arial", 16, "bold"))
 title_label.pack(pady=10)
 
 # Description
