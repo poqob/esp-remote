@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 import tkinter as tk
 import subprocess
+from activities import restart_esp
+from constants  import *
+
 
 def run_fetch_script():
     ip = ip_entry.get()
@@ -23,6 +26,12 @@ def run_push_script():
         command = f'lftp -u {username},{password} -p {port} {ip} -e "mirror --reverse --verbose ./project/ .; bye"'
         subprocess.run(command, shell=True, check=True)
         result_label.config(text="Push operation completed successfully.", fg="green")
+        # Restart ESP after push
+        restart_result = restart_esp(ip, ESP_REMOTE_SERVER_PORT, ESP_API_KEY)
+        if restart_result:
+            result_label.config(text="ESP restarted successfully.", fg="green")
+        else:
+            result_label.config(text="Failed to restart ESP.", fg="red")
     except Exception as e:
         result_label.config(text=f"Error: {e}", fg="red")
     check_remove_file()
@@ -45,13 +54,12 @@ def check_remove_file():
 
 # Main window
 root = tk.Tk()
-root.title("Poqob ESP FTP Client")
+root.title("ESP Remote")
 
 
 # Set application icon
-icon_path = "./ico/esp.png"  # Ensure this file is in the same directory as your script
 try:
-    app_icon = tk.PhotoImage(file=icon_path)
+    app_icon = tk.PhotoImage(file=APPLICATION_ICON_PATH)
     root.iconphoto(False, app_icon)
 except Exception as e:
     print(f"Error loading icon: {e}")
