@@ -7,6 +7,11 @@ This project aims to create a project management platform for ESP devices. Users
 - **Graphical Interface**: Easily perform FTP operations with a user-friendly interface.
 - **Command Line Tool**: Quick and flexible usage via CLI.
 - **Cross-Platform Support**: Designed to work on both Windows and Linux-based systems.
+- **Code Verification**: Automatic Python syntax checking before pushing files to prevent broken code.
+- **Selective Transfer**: Use the `.ignore` file to exclude specific files and directories from being pushed.
+- **Remote File Cleanup**: Utilize the `.remove` file to specify files that should be deleted from the ESP device after pushing.
+- **Auto ESP Restart**: Automatically restart the ESP device after push operations to apply changes immediately.
+
 
 ---
 
@@ -144,4 +149,5 @@ The remove operation is triggered automatically after a push operation. As shown
 - After successful removal, you may want to update or clear the _.remove file to prevent accidentally deleting the same files again.
 
 ---
+`````
 

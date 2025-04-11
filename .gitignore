@@ -2,10 +2,12 @@ venv/
 build/
 dist/
 project/
-_.remove
+.remove
+.ignore
 *.egg-info/
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 app.spec
+.todo
